@@ -4,6 +4,7 @@
 
 | الملف | شنو فيه | تنزيل |
 | --- | --- | --- |
+| ٣ مهارات موشن | تحريك الشعار، إعلان المنتج، الرسّام (فيديو «شفت هالفيديو؟») | [المهارات](files/fareeqi-3-skills.zip) |
 | أوامر الفيديو | كل الأوامر اللي سوينا فيها فيديو «ما راح تصدق» | [PDF](files/fareeqi-video-prompts.pdf) · [الحزمة](files/fareeqi-video-prompts.zip) |
 | كاتب الهوكات | مهارة لكلود فيها ١٥ قالب هوك، تكتبها لك على موضوعك | [المهارة](files/fareeqi-kuttab-al-hooks.zip) · [PDF](files/fareeqi-kuttab-al-hooks.pdf) |
 

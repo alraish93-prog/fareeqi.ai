@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>الرسام</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;700;900&family=Aref+Ruqaa:wght@700&family=El+Messiri:wght@600&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;height:100%;background:#111;color:#fff;font-family:Alexandria,sans-serif}
+.wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:12px;box-sizing:border-box}
+canvas{height:calc(100vh - 110px);max-width:calc(100vw - 24px);aspect-ratio:9/16;object-fit:contain;border-radius:14px;background:#000}
+.bar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+button{font:inherit;font-weight:700;border:0;border-radius:12px;padding:10px 18px;cursor:pointer;background:#fff;color:#111}
+button.main{background:#FFD43B}
+#msg{font-size:14px;opacity:.75;min-height:20px}
+</style></head><body>
+<div class="wrap">
+  <canvas id="c" width="1080" height="1920"></canvas>
+  <div class="bar"><button id="replay">إعادة</button><button id="rec" class="main">نزّل الفيديو</button></div>
+  <div id="msg"></div>
+</div>
+<script>
+// =====================================================================
+// الإعدادات: غيّر الكلام والألوان هني بس
+// =====================================================================
+const CONFIG = {
+  title: 'الكويت',               // العنوان اللي ينكتب فوق
+  paper: '#F6EEDD',              // لون الورق
+  ink: '#1C1B2E',                // لون خط الرسم
+  colorFrom: [250, 760],         // النقطة اللي يبدأ منها التلوين (هني: الشمس)
+  seconds: 3,
+  fileName: 'drawing',
+  fonts: ['700 190px "Aref Ruqaa"'],
+};
+
+// =====================================================================
+// أدوات عامة (لا تغيرها)
+// =====================================================================
+const W = 1080, H = 1920, cv = document.getElementById('c'), c = cv.getContext('2d');
+const clamp = x => Math.max(0, Math.min(1, x));
+const seg = (t, a, b) => clamp((t - a) / (b - a));                       // 0 → 1 between seconds a and b
+const ease = {
+  out: u => 1 - Math.pow(1 - clamp(u), 3),
+  inOut: u => { u = clamp(u); return u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; },
+  back: (u, s = 1.7) => { u = clamp(u) - 1; return 1 + (s + 1) * u * u * u + s * u * u; },
+};
+function rand(seed) { let a = seed >>> 0; return () => (a = (a * 1664525 + 1013904223) >>> 0) / 4294967296; }
+function write(s, x, y, { size = 100, font = 'Alexandria', weight = 900, color = '#fff', alpha = 1 } = {}) {
+  if (alpha <= 0) return; c.save(); c.globalAlpha *= alpha; c.font = `${weight} ${size}px "${font}"`;
+  c.direction = 'rtl'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillStyle = color; c.fillText(s, x, y); c.restore();
+}
+function star(x, y, r, color, rot = 0, points = 4) {
+  c.save(); c.translate(x, y); c.rotate(rot); c.beginPath();
+  for (let i = 0; i < points * 2; i++) { const a = i * Math.PI / points - Math.PI / 2, rr = i % 2 ? r * 0.26 : r; c.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); }
+  c.closePath(); c.fillStyle = color; c.fill(); c.restore();
+}
+const noise = document.createElement('canvas'); noise.width = noise.height = 256;
+{ const g = noise.getContext('2d'), img = g.createImageData(256, 256), r = rand(7);
+  for (let i = 0; i < img.data.length; i += 4) { const v = r() * 255; img.data[i] = img.data[i + 1] = img.data[i + 2] = v; img.data[i + 3] = 22; } g.putImageData(img, 0, 0); }
+function filmLook(t, dark = 0.5) {                                        // grain + vignette, same on every scene
+  c.save(); c.globalCompositeOperation = 'overlay'; const o = (Math.floor(t * 24) * 37) % 256;
+  c.fillStyle = c.createPattern(noise, 'repeat'); c.translate(-o, -o); c.fillRect(0, 0, W + 256, H + 256); c.restore();
+  const v = c.createRadialGradient(W / 2, H / 2, H * 0.3, W / 2, H / 2, H * 0.75);
+  v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, `rgba(0,0,0,${dark})`); c.fillStyle = v; c.fillRect(0, 0, W, H);
+}
+function flash(t, at, strength = 0.4, color = '255,255,255') {
+  const a = Math.max(0, 1 - Math.abs(t - at) / 0.1) * strength; if (a) { c.fillStyle = `rgba(${color},${a})`; c.fillRect(0, 0, W, H); }
+}
+
+// =====================================================================
+// المشهد: كل إطار يعتمد على الوقت t بالثواني بس
+// =====================================================================
+// The drawing = ink lines (LINES) + a colour layer (paint). To draw another idea, replace both and keep draw().
+// Each line: a Path2D, its rough length in px (L), when it starts (s) and how long it takes (d), in seconds.
+const GROUND = 1340;
+const path = f => { const p = new Path2D(); f(p); return p; };
+const needle = (x, top, wb) => path(p => { p.moveTo(x - wb, GROUND); p.lineTo(x - 3, top); p.lineTo(x + 3, top); p.lineTo(x + wb, GROUND); });
+const ball = (x, y, r) => path(p => p.arc(x, y, r, Math.PI / 2, Math.PI / 2 + Math.PI * 2));
+const LINES = [
+  { p: path(p => { p.moveTo(40, GROUND); p.lineTo(1040, GROUND); }), L: 1000, s: 0, d: 0.35 },   // horizon
+  { p: ball(250, 760, 120), L: 760, s: 0.05, d: 0.6 },                                           // sun
+  { p: needle(610, 440, 26), L: 1850, s: 0.12, d: 0.6 },                                         // main tower
+  { p: needle(430, 640, 22), L: 1430, s: 0.25, d: 0.55 },
+  { p: needle(760, 820, 14), L: 1050, s: 0.35, d: 0.5 },
+  { p: ball(610, 960, 86), L: 560, s: 0.4, d: 0.45 },
+  { p: ball(610, 760, 50), L: 330, s: 0.52, d: 0.4 },
+  { p: ball(430, 1015, 74), L: 480, s: 0.55, d: 0.45 },
+];
+function paint() {                                                                                // the colours under the ink
+  const sky = c.createLinearGradient(0, 200, 0, GROUND); sky.addColorStop(0, '#5B3FD1'); sky.addColorStop(0.45, '#FF6B6B'); sky.addColorStop(1, '#FFC46B');
+  c.fillStyle = sky; c.fillRect(0, 0, W, GROUND);
+  const sea = c.createLinearGradient(0, GROUND, 0, H); sea.addColorStop(0, '#2A7FBF'); sea.addColorStop(1, '#0E3B66'); c.fillStyle = sea; c.fillRect(0, GROUND, W, H);
+  c.fillStyle = '#FFE8A3'; c.beginPath(); c.arc(250, 760, 120, 0, 6.29); c.fill();
+  c.fillStyle = '#E9E4F5'; for (const [x, top, wb] of [[610, 440, 26], [430, 640, 22], [760, 820, 14]]) c.fill(needle(x, top, wb));
+  for (const [x, y, r] of [[610, 960, 86], [610, 760, 50], [430, 1015, 74]]) {
+    c.save(); c.beginPath(); c.arc(x, y, r, 0, 6.29); c.clip(); c.fillStyle = '#1F6E8C'; c.fillRect(x - r, y - r, 2 * r, 2 * r);
+    c.fillStyle = '#7FD8E8'; for (let i = -6; i <= 6; i++) for (let j = -6; j <= 6; j++) if ((i + j) % 2 === 0) { c.beginPath(); c.arc(x + i * r / 5, y + j * r / 6, r / 14, 0, 6.29); c.fill(); }
+    c.fillStyle = 'rgba(255,255,255,.35)'; c.beginPath(); c.arc(x - r * 0.35, y - r * 0.35, r * 0.4, 0, 6.29); c.fill(); c.restore(); }
+}
+function extras(t) {                                                                              // small life: waves and birds
+  const { ink } = CONFIG; c.save(); c.strokeStyle = ink; c.lineWidth = 5; c.lineCap = 'round'; c.globalAlpha = seg(t, 0.6, 1.0);
+  for (let r = 0; r < 4; r++) { const y = GROUND + 70 + r * 85, ph = t * 2 + r; c.beginPath();
+    for (let x = 60 + (r % 2) * 80; x < W - 60; x += 160) { const o = Math.sin(ph + x * 0.01) * 6; c.moveTo(x, y + o); c.quadraticCurveTo(x + 40, y - 18 + o, x + 80, y + o); } c.stroke(); }
+  c.globalAlpha = seg(t, 1.6, 1.9); const r = rand(3);
+  for (let i = 0; i < 5; i++) { const bx = 1150 - (t - 1.6) * (180 + 60 * r()) - i * 90, by = 420 + r() * 160 + Math.sin(t * 6 + i) * 8, f = Math.sin(t * 14 + i) * 14;
+    c.beginPath(); c.moveTo(bx - 26, by - f); c.quadraticCurveTo(bx - 10, by - 10, bx, by); c.quadraticCurveTo(bx + 10, by - 10, bx + 26, by - f); c.stroke(); }
+  c.restore();
+}
+function draw(t) {
+  const { paper, ink, title, colorFrom } = CONFIG;
+  c.fillStyle = paper; c.fillRect(0, 0, W, H);
+  const z = 1.06 - 0.06 * ease.inOut(t / 3); c.save(); c.translate(W / 2, H * 0.55); c.scale(z, z); c.translate(-W / 2, -H * 0.55);
+  const pc = ease.inOut(seg(t, 1.05, 1.85));                                                       // 2. colour floods out from one point
+  if (pc > 0) { c.save(); c.beginPath(); c.arc(colorFrom[0], colorFrom[1], 60 + 2200 * pc, 0, 6.29); c.clip(); paint(); c.restore(); }
+  c.save(); c.strokeStyle = ink; c.lineWidth = 7; c.lineJoin = 'round'; c.lineCap = 'round';      // 1. ink lines draw on
+  for (const o of LINES) { const p = ease.inOut(seg(t, o.s, o.s + o.d)); if (p <= 0) continue; c.setLineDash([o.L, o.L]); c.lineDashOffset = o.L * (1 - p); c.stroke(o.p); }
+  c.restore(); extras(t); c.restore();
+  const pt = ease.out(seg(t, 1.95, 2.45));                                                         // 3. title written right to left
+  if (pt > 0) { c.save(); c.beginPath(); c.rect(W / 2 + 330 - 660 * pt, 0, 660 * pt, H); c.clip(); write(title, W / 2, 260, { size: 190, font: 'Aref Ruqaa', weight: 700, color: pc > 0.5 ? '#FFFFFF' : ink }); c.restore(); }
+  filmLook(t, 0.35);
+}
+
+// =====================================================================
+// التشغيل والتنزيل (لا تغيرها)
+// =====================================================================
+const DUR = CONFIG.seconds;
+let start = performance.now(), recording = null;
+function frame(now) {
+  const t = Math.min(DUR, (now - start) / 1000);
+  c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = 1; c.clearRect(0, 0, W, H); draw(t);
+  if (t >= DUR) { if (recording) { recording.stop(); recording = null; } else if (now - start > (DUR + 0.8) * 1000) start = now; }
+  requestAnimationFrame(frame);
+}
+document.getElementById('replay').onclick = () => { start = performance.now(); };
+document.getElementById('rec').onclick = () => {
+  const msg = document.getElementById('msg');
+  if (!window.MediaRecorder || !cv.captureStream) { msg.textContent = 'المتصفح ما يدعم التنزيل. افتح الملف بكروم.'; return; }
+  const type = ['video/mp4;codecs=avc1', 'video/mp4', 'video/webm;codecs=vp9', 'video/webm'].find(m => MediaRecorder.isTypeSupported(m));
+  const rec = new MediaRecorder(cv.captureStream(30), { mimeType: type, videoBitsPerSecond: 12e6 }), parts = [];
+  rec.ondataavailable = e => e.data.size && parts.push(e.data);
+  rec.onstop = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(parts, { type }));
+    a.download = CONFIG.fileName + (type.includes('mp4') ? '.mp4' : '.webm'); a.click(); msg.textContent = 'تم التنزيل'; };
+  msg.textContent = 'جاري التسجيل…'; rec.start(); recording = rec; start = performance.now();
+};
+Promise.all([CONFIG.fonts.map(f => document.fonts.load(f))].flat()).finally(() => requestAnimationFrame(frame));
+</script>
+</body></html>
