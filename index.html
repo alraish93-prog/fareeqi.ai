@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مكتبة فريقي</title>
+<meta name="description" content="أوامر ومهارات جاهزة لكلود، لصناع المحتوى وأصحاب البراندات. من @fareeqi.ai">
+<link rel="icon" href="files/logo-256.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#2346FF;--deep:#0B1678;--yel:#FFD43B;--ink:#0E1230;--paper:#F4F6FF;--card:#FFFFFF;--line:#DCE2FA;--mute:#5B638A}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;font-family:Alexandria,system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.8}
+.hero{background:radial-gradient(120% 90% at 70% 0%,#3A5CFF 0%,var(--blue) 45%,var(--deep) 100%);color:#fff;padding:48px 16px 64px;text-align:center}
+.hero img{width:92px;height:92px;border-radius:50%;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.hero h1{font-size:clamp(34px,8vw,56px);margin:14px 0 4px;font-weight:900}
+.hero p{margin:0 auto;max-width:560px;opacity:.9}
+.hero .tag{display:inline-block;margin-top:14px;background:var(--yel);color:var(--ink);font-weight:800;padding:6px 16px;border-radius:999px}
+nav{position:sticky;top:0;z-index:5;background:rgba(244,246,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;gap:8px;overflow-x:auto;padding:10px 16px}
+nav a{flex:none;text-decoration:none;color:var(--ink);font-weight:700;padding:6px 14px;border-radius:999px;background:#fff;border:1px solid var(--line)}
+main{max-width:760px;margin:0 auto;padding:16px}
+section{background:var(--card);border-radius:24px;padding:22px 18px;margin:22px 0;box-shadow:0 6px 30px rgba(14,18,48,.06)}
+section>h2{margin:0 0 4px;font-size:26px;font-weight:900}
+.sub{color:var(--mute);margin:0 0 14px}
+.badge{display:inline-block;font-size:13px;font-weight:700;background:#EEF1FF;color:var(--blue);padding:2px 10px;border-radius:999px;margin-inline-start:6px}
+.dl{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 6px}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;padding:12px 18px;border-radius:14px;background:var(--blue);color:#fff}
+.btn.alt{background:var(--yel);color:var(--ink)}
+.step{border:1px solid var(--line);border-radius:18px;margin:12px 0;overflow:hidden}
+.sh{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#F7F8FF}
+.sh h3{margin:0;font-size:17px;flex:1}
+.n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-weight:800;display:grid;place-items:center;font-size:14px}
+pre{margin:0;padding:14px 16px;white-space:pre-wrap;word-break:break-word;font-family:inherit;font-size:15px;background:#fff}
+section pre{border-radius:14px;background:#F7F8FF;margin:8px 0}
+.step pre{border-radius:0;background:#fff}
+.copy{flex:none;font-family:inherit;font-weight:800;border:0;border-radius:10px;padding:6px 14px;background:var(--yel);color:var(--ink);cursor:pointer}
+.copy.done{background:#1FD49A}
+table{width:100%;border-collapse:collapse;margin:8px 0} td{border:1px solid var(--line);padding:6px 10px} tr:first-child td{background:var(--blue);color:#fff;font-weight:700}
+p.li::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--blue);margin-inline-end:8px}
+details{margin-top:8px} summary{cursor:pointer;font-weight:800;color:var(--blue)}
+.note{background:#FFF8D9;border-radius:14px;padding:10px 14px;margin:10px 0}
+footer{text-align:center;color:var(--mute);padding:30px 16px 50px}
+</style></head><body>
+<header class="hero">
+  <img src="files/logo-256.png" alt="فريقي">
+  <h1>مكتبة فريقي</h1>
+  <p>أوامر ومهارات جاهزة لكلود، لصناع المحتوى وأصحاب البراندات. انسخ، والصق، واشتغل.</p>
+  <span class="tag">ببلاش</span>
+</header>
+<nav><a href="#video">أوامر الفيديو</a><a href="#hooks">كاتب الهوكات</a><a href="#style">ملف الستايل</a><a href="#voice">نص الصوت</a></nav>
+<main>
+<section id="video">
+  <h2>أوامر فيديو التعريف <span class="badge">كلود كود</span></h2>
+  <p class="sub">كل الأوامر اللي سوينا فيها فيديو «ما راح تصدق»: الضربات، والكاميرا، والخطوط، وألوان البراند، وصوت لكل حركة.</p>
+  <div class="note">تحتاج كلود كود، لأن الفيديو ينبني بالكود. خلك على نفس المحادثة من أول أمر لين آخر أمر، وغيّر اللي بين [ ].</div>
+  <div class="dl"><a class="btn" href="files/fareeqi-video-prompts.pdf" download>نزّل PDF</a><a class="btn alt" href="files/fareeqi-video-prompts.zip" download>نزّل الحزمة مع المهارة</a></div>
+  <div class="step"><div class="sh"><span class="n">1</span><h3>جهّز المشروع</h3><button class="copy" data-t="سوّ لي مشروع فيديو جديد اسمه [اسم الفيديو].
+الفيديو عمودي ١٠٨٠×١٩٢٠، ٣٠ إطار بالثانية.
+ابنِ الرسم بالكود على صفحة ويب، وصوّر الإطارات بمتصفح مخفي، وركبها فيديو بـ ffmpeg.
+كل إطار يعتمد على الوقت بس، عشان المعاينة والنسخة النهائية يطلعون نفس الشي.
+قبل أي شي، تأكد إن الأدوات موجودة بجهازي، وقول لي إذا ناقص شي قبل لا تثبته.">انسخ</button></div><pre>سوّ لي مشروع فيديو جديد اسمه [اسم الفيديو].
+الفيديو عمودي ١٠٨٠×١٩٢٠، ٣٠ إطار بالثانية.
+ابنِ الرسم بالكود على صفحة ويب، وصوّر الإطارات بمتصفح مخفي، وركبها فيديو بـ ffmpeg.
+كل إطار يعتمد على الوقت بس، عشان المعاينة والنسخة النهائية يطلعون نفس الشي.
+قبل أي شي، تأكد إن الأدوات موجودة بجهازي، وقول لي إذا ناقص شي قبل لا تثبته.</pre></div><div class="step"><div class="sh"><span class="n">2</span><h3>الستايل</h3><button class="copy" data-t="هذا ملف الستايل حقي: [الصق محتوى ملف الستايل].
+احفظه بالمشروع، والتزم فيه بكل لقطة: الألوان، والخط، والإحساس.">انسخ</button></div><pre>هذا ملف الستايل حقي: [الصق محتوى ملف الستايل].
+احفظه بالمشروع، والتزم فيه بكل لقطة: الألوان، والخط، والإحساس.</pre></div><div class="step"><div class="sh"><span class="n">3</span><h3>الصوت والتوقيت</h3><button class="copy" data-t="هذا ملف صوت المعلّق: [اسم الملف]، وهذا النص اللي قاله: [الصق النص].
+قيس وين يسكت المعلّق، واطلع منها وقت كل جملة وكل كلمة.
+خل ملف واحد بس فيه كل التوقيتات، والصورة والأصوات كلها تمشي عليه.">انسخ</button></div><pre>هذا ملف صوت المعلّق: [اسم الملف]، وهذا النص اللي قاله: [الصق النص].
+قيس وين يسكت المعلّق، واطلع منها وقت كل جملة وكل كلمة.
+خل ملف واحد بس فيه كل التوقيتات، والصورة والأصوات كلها تمشي عليه.</pre></div><div class="step"><div class="sh"><span class="n">4</span><h3>الهوك بالضربات</h3><button class="copy" data-t="أول ٣ ثواني أهم شي. كل كلمة من الهوك تنضرب على الشاشة ضخمة وقت ما تنقال:
+تكبر وترجع لحجمها بنص ثانية، والكاميرا تهتز هزة خفيفة مع الضربة.
+أول إطار لازم يكون فيه كلام وحركة، مو شاشة فاضية.">انسخ</button></div><pre>أول ٣ ثواني أهم شي. كل كلمة من الهوك تنضرب على الشاشة ضخمة وقت ما تنقال:
+تكبر وترجع لحجمها بنص ثانية، والكاميرا تهتز هزة خفيفة مع الضربة.
+أول إطار لازم يكون فيه كلام وحركة، مو شاشة فاضية.</pre></div><div class="step"><div class="sh"><span class="n">5</span><h3>لقطة جديدة مع كل جملة</h3><button class="copy" data-t="لا تخلي لقطة تطول. سوّ لقطة جديدة مع كل جملة تقريباً، وأحياناً مع كل كلمة مهمة.
+كل لقطة تعرض الكلام حرفياً: إذا قال «صورة» تطلع صورة، وإذا قال «صوت» تطلع موجة صوت.">انسخ</button></div><pre>لا تخلي لقطة تطول. سوّ لقطة جديدة مع كل جملة تقريباً، وأحياناً مع كل كلمة مهمة.
+كل لقطة تعرض الكلام حرفياً: إذا قال «صورة» تطلع صورة، وإذا قال «صوت» تطلع موجة صوت.</pre></div><div class="step"><div class="sh"><span class="n">6</span><h3>الكاميرا والحياة</h3><button class="copy" data-t="خل الكاميرا تتحرك دايماً: اهتزاز خفيف مثل اليد، وتقريب سريع مع كل ضربة.
+ضيف حبيبات خفيفة مثل الأفلام، وتعتيم خفيف على الأطراف، وضبابية حركة ناعمة.">انسخ</button></div><pre>خل الكاميرا تتحرك دايماً: اهتزاز خفيف مثل اليد، وتقريب سريع مع كل ضربة.
+ضيف حبيبات خفيفة مثل الأفلام، وتعتيم خفيف على الأطراف، وضبابية حركة ناعمة.</pre></div><div class="step"><div class="sh"><span class="n">7</span><h3>الخطوط</h3><button class="copy" data-t="اعرض لي نفس الجملة بـ ٦ خطوط عربية مجانية، وتحت كل خط اسمه.
+الكلام العربي ينكتب كلمات كاملة، من اليمين لليسار، ولا تفصل الحروف أبداً.
+بعدين خلني أختار، وطبق الخط اللي أختاره على كل الفيديو.">انسخ</button></div><pre>اعرض لي نفس الجملة بـ ٦ خطوط عربية مجانية، وتحت كل خط اسمه.
+الكلام العربي ينكتب كلمات كاملة، من اليمين لليسار، ولا تفصل الحروف أبداً.
+بعدين خلني أختار، وطبق الخط اللي أختاره على كل الفيديو.</pre></div><div class="step"><div class="sh"><span class="n">8</span><h3>ألوان البراند</h3><button class="copy" data-t="هذي ألوان براندي: [الخلفية] و [اللون البارز] و [الكتابة].
+لوّن كل الفيديو فيها. اللون البارز للكلمات المهمة بس.
+وإذا أبي أجرب ألوان ثانية، قلب الفيديو كله بمسحة دائرية من لون للون.">انسخ</button></div><pre>هذي ألوان براندي: [الخلفية] و [اللون البارز] و [الكتابة].
+لوّن كل الفيديو فيها. اللون البارز للكلمات المهمة بس.
+وإذا أبي أجرب ألوان ثانية، قلب الفيديو كله بمسحة دائرية من لون للون.</pre></div><div class="step"><div class="sh"><span class="n">9</span><h3>صوت لكل حركة</h3><button class="copy" data-t="كل شكل يطلع بالفيديو له صوته، ويضرب بنفس الإطار اللي يطلع فيه:
+الدائرة فقعة، والمربع طقة، والمثلث رنة، والنجمة لمعة.
+الضربات الكبيرة لها صوت عميق، والانتقالات لها سحبة، وقبل الخاتمة صوت يرتفع.
+سوّ الأصوات بالكود بنفسك، وطلعها من نفس ملف التوقيت.
+وخل مستوى الصوت كله تقريباً ‎-14 LUFS‎ عشان يناسب الانستقرام.">انسخ</button></div><pre>كل شكل يطلع بالفيديو له صوته، ويضرب بنفس الإطار اللي يطلع فيه:
+الدائرة فقعة، والمربع طقة، والمثلث رنة، والنجمة لمعة.
+الضربات الكبيرة لها صوت عميق، والانتقالات لها سحبة، وقبل الخاتمة صوت يرتفع.
+سوّ الأصوات بالكود بنفسك، وطلعها من نفس ملف التوقيت.
+وخل مستوى الصوت كله تقريباً ‎-14 LUFS‎ عشان يناسب الانستقرام.</pre></div><div class="step"><div class="sh"><span class="n">10</span><h3>الترجمة على الشاشة</h3><button class="copy" data-t="اكتب الكلام تحت كلمة كلمة على وقت الصوت، والكلمة اللي تنقال الحين تتلون باللون البارز.
+خلها نظيفة وواضحة، وبعيدة عن أطراف الشاشة اللي يغطيها الانستقرام.">انسخ</button></div><pre>اكتب الكلام تحت كلمة كلمة على وقت الصوت، والكلمة اللي تنقال الحين تتلون باللون البارز.
+خلها نظيفة وواضحة، وبعيدة عن أطراف الشاشة اللي يغطيها الانستقرام.</pre></div><div class="step"><div class="sh"><span class="n">11</span><h3>الخاتمة</h3><button class="copy" data-t="آخر ٥ ثواني: «اكتب كلمة [الكلمة] بالتعليقات».
+الكلمة تطلع ضخمة بضربة، وبعدين خانة تعليق تنكتب فيها الكلمة، وبعدين رسالة خاصة توصل.">انسخ</button></div><pre>آخر ٥ ثواني: «اكتب كلمة [الكلمة] بالتعليقات».
+الكلمة تطلع ضخمة بضربة، وبعدين خانة تعليق تنكتب فيها الكلمة، وبعدين رسالة خاصة توصل.</pre></div><div class="step"><div class="sh"><span class="n">12</span><h3>المعاينة والتسليم</h3><button class="copy" data-t="طلع لي صفحة فيها لقطات من الفيديو كل ثانيتين، وراجعها بنفسك قبل لا تعطيني.
+إذا كل شي تمام، طلع نسخة نهائية ١٠٨٠×١٩٢٠ مع الصوت والمؤثرات.">انسخ</button></div><pre>طلع لي صفحة فيها لقطات من الفيديو كل ثانيتين، وراجعها بنفسك قبل لا تعطيني.
+إذا كل شي تمام، طلع نسخة نهائية ١٠٨٠×١٩٢٠ مع الصوت والمؤثرات.</pre></div><div class="step"><div class="sh"><span class="n">13</span><h3>إذا حسيت الفيديو رخيص أو ميت</h3><button class="copy" data-t="الفيديو حاسه [رخيص / ميت / بطيء]. طوّره:
+لقطة جديدة أسرع، وضربات أقوى على الكلمات المهمة، وكاميرا تتحرك أكثر،
+وقلبة لون كاملة على أهم جملة، وأصوات أوضح مع كل حركة.">انسخ</button></div><pre>الفيديو حاسه [رخيص / ميت / بطيء]. طوّره:
+لقطة جديدة أسرع، وضربات أقوى على الكلمات المهمة، وكاميرا تتحرك أكثر،
+وقلبة لون كاملة على أهم جملة، وأصوات أوضح مع كل حركة.</pre></div>
+</section>
+<section id="hooks">
+  <h2>مهارة كاتب الهوكات <span class="badge">تطبيق كلود</span></h2>
+  <p class="sub">تعطيها موضوعك، وتطلع لك ١٠ هوكات، وتختار الأقوى وتقول ليش، وتكتب لك السكربت.</p>
+  <div class="dl"><a class="btn" href="files/fareeqi-kuttab-al-hooks.zip" download>نزّل المهارة</a><a class="btn alt" href="files/fareeqi-kuttab-al-hooks.pdf" download>نزّل PDF</a></div>
+  <p>فيها ١٥ قالب هوك مجرب. تعطيها موضوع فيديوك، وتطلع لك ١٠ هوكات كل واحد بأسلوب مختلف، وتختار لك الأقوى وتشرح ليش، وتكتب لك السكربت كامل باللهجة اللي تبيها.</p>
+<h3>تشتغل وين؟</h3>
+<p>بتطبيق كلود العادي، وبكلود كود بعد. ما تحتاج أي أداة ثانية.</p>
+<h3>شلون تركّبها</h3>
+<p><b>بتطبيق كلود (الجوال أو المتصفح):</b></p>
+<p>١. فك الضغط عن الحزمة.</p>
+<p>٢. افتح الإعدادات، بعدين الإمكانيات، بعدين المهارات، وارفع ملف «kuttab-al-hooks-للرفع.zip» زي ما هو.</p>
+<p>٣. شغّل المهارة.</p>
+<p><b>بكلود كود:</b></p>
+<p>انسخ مجلد kuttab-al-hooks داخل مشروعك بهالمسار: .claude/skills/kuttab-al-hooks</p>
+<h3>شلون تستخدمها</h3>
+<p>اكتب لكلود: «اكتب لي هوكات لفيديو عن [موضوعك]، وجمهوري [منو جمهورك]، باللهجة [الكويتية / السعودية / …]».</p>
+<h3>مثال على النتيجة</h3>
+<table><tr><td>#</td><td>الهوك</td></tr><tr><td>1</td><td>شرايك لو قلتلك إن هوك هالفيديو… ما كتبته أنا؟</td></tr><tr><td>2</td><td>تدري إن كلود يقدر يكتب لك عشر هوكات بكل فيديو؟</td></tr><tr><td>3</td><td>هذي ٣ خطوات لو سويتها… كل فيديو بيبدأ بهوك قوي</td></tr></table>
+<p><b>الأقوى:</b> الأول، لأنه يفتح سؤال بمخ المشاهد، فيكمل الفيديو عشان يعرف الجواب.</p>
+  <details><summary>شوف محتوى المهارة كامل</summary><p>أنت كاتب هوكات لصناع المحتوى وأصحاب البراندات بالخليج. الهوك هو أول ٣ ثواني بالفيديو، وهو أهم شي فيه.</p>
+<h3>لما يعطيك المستخدم موضوع</h3>
+<p>١. اسأله سؤال واحد بس إذا ناقص: منو جمهوره؟ (صناع محتوى، صاحب براند، متجر…)</p>
+<p>٢. اكتب <b>١٠ هوكات</b>، كل واحد من قالب مختلف من الـ١٥ قالب تحت.</p>
+<p>٣. اختار <b>أقوى واحد</b>، وقول ليش بسطر واحد.</p>
+<p>٤. اكتب له <b>سكربت قصير</b> (٣٠ إلى ٤٠ ثانية) يبدأ بالهوك المختار.</p>
+<h3>قوالب الهوك</h3>
+<table><tr><td>#</td><td>القالب</td></tr><tr><td>1</td><td>هذي ٣ أشياء…</td></tr><tr><td>2</td><td>أحسن طريقة إنك تسوي…</td></tr><tr><td>3</td><td>شرايك لو قلتلك إن…</td></tr><tr><td>4</td><td>تدري إن…</td></tr><tr><td>5</td><td>المفروض ما أقول هالكلام…</td></tr><tr><td>6</td><td>ياليت لو فيه أحد قالي هالكلام أول ما بديت بـ…</td></tr><tr><td>7</td><td>شنو راح يصير لو…</td></tr><tr><td>8</td><td>عندي سؤال…</td></tr><tr><td>9</td><td>أدري إن ما في أحد قالك هالكلام…</td></tr><tr><td>10</td><td>إذا سويت كذا وكذا… راح يطلع معاك… (البداية الخطوات، والنهاية النتيجة)</td></tr><tr><td>11</td><td>ما راح تصدق اللي شفته</td></tr><tr><td>12</td><td>أخذ مني الموضوع فترة…</td></tr><tr><td>13</td><td>هذي ٣ خطوات لو سويتها بتحصل على…</td></tr><tr><td>14</td><td>جربت ٢٠٠ شغلة لحل مشكلة… (بس إذا الرقم صحيح)</td></tr><tr><td>15</td><td>٥ سنوات بالتسويق بمدة ٦٠ ثانية… (بس إذا الرقم صحيح)</td></tr></table>
+<h3>قواعد</h3>
+<p class="li">الهوك قصير: أقل من ١٢ كلمة، وينقال بأقل من ٣ ثواني.</p>
+<p class="li">بلهجة المستخدم (كويتي، سعودي، إماراتي…)، مو فصحى.</p>
+<p class="li">لا تكتب رقم أو نتيجة ما صارت فعلاً. إذا الهوك فيه رقم، اسأل المستخدم إذا هو صحيح.</p>
+<p class="li">بدون إيموجي.</p>
+<p class="li">كل هوك يفتح سؤال بمخ المشاهد، والفيديو لازم يجاوبه.</p>
+<h3>شكل الرد</h3>
+<table><tr><td>#</td><td>الهوك</td><td>القالب</td></tr></table>
+<p>(١٠ صفوف)</p>
+<p><b>الأقوى:</b> … لأن …</p>
+<p><b>السكربت:</b></p>
+<table><tr><td>الثانية</td><td>الكلام</td></tr></table></details>
+</section>
+<section id="style">
+  <h2>ملف الستايل</h2>
+  <p class="sub">عبّيه مرة وحدة، وبعدها كل فيديو جديد قول لكلود: «نفس الستايل».</p>
+  <p>عبّي هالملف مرة وحدة، وأعطه لكلود. بعدها كل فيديو جديد قوله بس: «نفس الستايل».</p>
+<h3>اسم الحساب أو المشروع</h3>
+<p>[اكتب الاسم]</p>
+<h3>الألوان</h3>
+<table><tr><td>الدور</td><td>اللون</td></tr><tr><td>الخلفية</td><td>[مثلاً: أزرق غامق]</td></tr><tr><td>اللون البارز (للكلمات المهمة بس)</td><td>[مثلاً: أصفر]</td></tr><tr><td>الكتابة</td><td>[مثلاً: أبيض]</td></tr></table>
+<h3>الخطوط</h3>
+<p class="li">العناوين: [اسم الخط، ثقيل]</p>
+<p class="li">الكلام تحت: [اسم الخط، عادي]</p>
+<h3>الحركة</h3>
+<p class="li">السرعة: [هادية / متوسطة / سريعة]</p>
+<p class="li">لقطة جديدة كل: [مثلاً: ثانية إلى ثانيتين]</p>
+<p class="li">الانتقالات: [تقريب / سحبة / مسحة لون]</p>
+<h3>الصوت</h3>
+<p class="li">المعلّق: [اسم الصوت اللي اخترته]</p>
+<p class="li">اللهجة: [كويتي / سعودي / خليجي]</p>
+<p class="li">مؤثرات صوتية: [إي / لا]</p>
+<p class="li">موسيقى: [إي / لا]</p>
+<h3>الشعار والحساب</h3>
+<p class="li">الشعار: [وين ملفه]</p>
+<p class="li">اسم الحساب يطلع على الشاشة: [@اسم_حسابك]</p>
+<h3>ممنوعات</h3>
+<p class="li">[مثلاً: لا إيموجي على الشاشة]</p>
+<p class="li">[مثلاً: لا أرقام غير صحيحة]</p>
+<h3>الخاتمة بكل فيديو</h3>
+<p class="li">الكلمة اللي يكتبونها بالتعليقات: [الكلمة]</p>
+<p class="li">اللي يوصلهم: [الملف أو الرابط]</p>
+<p><b>شلون تستخدمه:</b></p>
+<p>١. عبّي الملف.</p>
+<p>٢. قول لكلود: «احفظ هذا كملف الستايل حقي، والتزم فيه بكل فيديو».</p>
+<p>٣. كل فيديو جديد: «سوّ فيديو عن [الموضوع]، نفس الستايل».</p>
+</section>
+<section id="voice">
+  <h2>نص الصوت</h2>
+  <h3>شلون تكتب النص</h3>
+<p class="li">جمل قصيرة، كل جملة فكرة وحدة.</p>
+<p class="li">اكتب باللهجة اللي تبي المعلّق يتكلم فيها، مو فصحى.</p>
+<p class="li">حط «…» وين تبي المعلّق يوقف لحظة. والوقفة هذي هي اللي يتقطع عليها الفيديو.</p>
+<p class="li">الأرقام تنكتب كلام: «ثلاث» مو «٣».</p>
+<p class="li">أول سطر هو الهوك. خله أقل من ١٢ كلمة.</p>
+<h3>مثال</h3>
+<pre>[confident, calm] ما راح تصدق لو قلتلك إن هالفيديو كله… سواه الذكاء الاصطناعي.
+
+الصورة، والحركة، والخط… وحتى كل صوت تسمعه مع كل حركة.
+
+اكتب كلمة [الكلمة] بالتعليقات… ويوصلك الرابط بالخاص.</pre>
+<p>اللي بين القوسين أول سطر يحدد نبرة المعلّق، وما ينقال.</p>
+<h3>شلون تطلع الصوت</h3>
+<p>١. افتح أداة الصوت (مثل إلفن لابز)، واختار صوت بلهجتك.</p>
+<p>٢. الصق النص، وطلع الصوت، ونزّله.</p>
+<p>٣. أعطه لكلود كود مع النص نفسه، بالأمر رقم ٣ من ملف الأوامر.</p>
+</section>
+</main>
+<footer>فريقي · @fareeqi.ai</footer>
+<script>
+document.querySelectorAll('.copy').forEach(b => b.addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(b.dataset.t); } catch (e) {
+    const t = document.createElement('textarea'); t.value = b.dataset.t; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
+  b.textContent = 'تم النسخ'; b.classList.add('done'); setTimeout(() => { b.textContent = 'انسخ'; b.classList.remove('done'); }, 1600);
+}));
+</script>
+</body></html>
